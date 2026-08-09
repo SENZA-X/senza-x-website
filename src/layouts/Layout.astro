@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  locale: 'en' | 'zh';
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { locale, title, description = 'SENZA.X bespoke furniture atelier. Small-batch, single-piece, high-complexity orders.', ogImage = '/img/hero-showroom.jpg' } = Astro.props;
+
+const lang = locale === 'zh' ? 'zh-CN' : 'en';
+const otherLocale = locale === 'en' ? 'zh' : 'en';
+const otherLabel = locale === 'en' ? '中文' : 'EN';
+
+// 语言切换：保留当前路径，只替换 locale 前缀
+const path = Astro.url.pathname;
+const basePath = path.replace(/^\/(en|zh)/, '');
+const otherHref = `/${otherLocale}${basePath === '/' ? '' : basePath}`;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content={ogImage}>
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='52' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='52' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SENZA.X",
+  "url": "https://senza.x",
+  "email": "project@senza.x"
+})} />
+</head>
+<body>
+
+<slot />
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

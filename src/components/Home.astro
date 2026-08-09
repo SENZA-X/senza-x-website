@@ -1,0 +1,186 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  settings: CollectionEntry<'settings'>;
+  locale: 'en' | 'zh';
+}
+
+const { settings, locale } = Astro.props;
+const s = settings.data;
+
+const collageImages = [
+  '/img/wood-work.jpg', '/img/joinery-detail.jpg', '/img/workshop.jpg',
+  '/img/furniture-showroom.jpg', '/img/wood-material.jpg',
+  '/img/chair-product.jpg', '/img/handtools.jpg', '/img/packaging.jpg'
+];
+
+const t = {
+  en: { born: 'Born Global', open: 'Open and connected', atelier: 'Atelier', craft: 'Craftsmanship first',
+        orEmail: 'Or email directly:' },
+  zh: { born: '生于全球', open: '开放且互联', atelier: '工坊', craft: '工艺至上',
+        orEmail: '或直接发邮件：' },
+}[locale];
+---
+
+<!-- Hero -->
+<header class="hero" id="top">
+  <div class="hero-top">
+    <div class="hero-logo-text reveal">{s.hero.logoText}</div>
+  </div>
+  <div class="hero-main-img reveal">
+    <img src={s.hero.mainImage} alt={s.brand} loading="lazy">
+  </div>
+</header>
+
+<!-- Manifesto -->
+<section class="manifesto" id="manifesto">
+  <div class="reveal">
+    <div class="eyebrow">{s.manifesto.eyebrow}</div>
+    <h2 class="section-title">{s.manifesto.title}</h2>
+    <p class="body-text">{s.manifesto.body}</p>
+    <a href="#contact" class="btn-primary">{s.manifesto.ctaLabel}</a>
+  </div>
+</section>
+
+<!-- Collage -->
+<section class="collage">
+  <div class="collage-grid reveal">
+    <div class="collage-cell c-1"><img src={collageImages[0]} alt="" loading="lazy"></div>
+    <div class="collage-cell c-2"><img src={collageImages[1]} alt="" loading="lazy"></div>
+    <div class="collage-cell c-3"><img src={collageImages[2]} alt="" loading="lazy"></div>
+    <div class="collage-cell c-4"><img src={collageImages[3]} alt="" loading="lazy"></div>
+    <div class="collage-cell text c-5 black">
+      <h3>{t.born}</h3>
+      <p>{t.open}</p>
+    </div>
+    <div class="collage-cell c-6"><img src={collageImages[4]} alt="" loading="lazy"></div>
+    <div class="collage-cell c-7"><img src={collageImages[5]} alt="" loading="lazy"></div>
+    <div class="collage-cell c-8"><img src={collageImages[6]} alt="" loading="lazy"></div>
+    <div class="collage-cell text c-9">
+      <h3>{t.atelier}</h3>
+      <p>{t.craft}</p>
+    </div>
+    <div class="collage-cell c-10"><img src={collageImages[7]} alt="" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- Models -->
+<section class="models" id="models">
+  <div class="wrap">
+    <div class="models-head reveal">
+      <div>
+        <div class="eyebrow">{s.models.eyebrow}</div>
+        <h2 class="section-title">{s.models.title}</h2>
+      </div>
+      <div class="model-nav">
+        {s.models.tabs.map((tab, i) => <span class:list={[{ active: i === 0 }]}>{tab}</span>)}
+      </div>
+    </div>
+    <div class="model-stage reveal">
+      <div class="model-main-img">
+        <img src={s.models.mainImage} alt={s.models.title} loading="lazy">
+      </div>
+      <div class="model-specs">
+        {s.models.specs.map(spec => (
+          <div class="model-spec">
+            <div class="num">{spec.num}</div>
+            <div class="lbl">{spec.lbl}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission -->
+<section class="mission">
+  <div class="wrap mission-grid">
+    <div class="mission-img reveal">
+      <img src={s.mission.image} alt="" loading="lazy">
+    </div>
+    <div class="mission-text reveal">
+      <div class="eyebrow">{s.mission.eyebrow}</div>
+      <h2 class="section-title">{s.mission.title}</h2>
+      <p class="body-text">{s.mission.body}</p>
+      <a href={`/${locale}/blog/index.html`} class="btn-text">{s.mission.linkLabel}</a>
+    </div>
+  </div>
+</section>
+
+<!-- Dark section -->
+<section class="dark-section" id="platform">
+  <div class="dark-hero">
+    <div class="dark-hero-bg">
+      <img src={s.dark.bgImage} alt="" loading="lazy">
+    </div>
+    <div class="dark-hero-content reveal">
+      <div class="eyebrow">{s.dark.eyebrow}</div>
+      <h2>{s.dark.title}</h2>
+      <p class="body-text">{s.dark.body}</p>
+      <a href="#contact" class="btn-primary">{s.dark.ctaLabel}</a>
+    </div>
+  </div>
+</section>
+
+<!-- Cards -->
+<section class="cards-section" id="craft">
+  <div class="wrap">
+    <div class="cards-grid reveal">
+      {s.cards.map(card => (
+        <article class="card-item">
+          <div class="card-img"><img src={card.image} alt={card.title} loading="lazy"></div>
+          <h3>{card.title}</h3>
+          <p>{card.body}</p>
+          <a href="#contact" class="btn-text">{card.linkLabel}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- News -->
+<section class="news-dark">
+  <div class="wrap news-grid">
+    <div class="news-text reveal">
+      <div class="eyebrow">{s.news.eyebrow}</div>
+      <h2>{s.news.title}</h2>
+      <p>{s.news.body}</p>
+      <a href={`/${locale}/blog/index.html`} class="btn-primary">{s.news.ctaLabel}</a>
+    </div>
+    <div class="news-imgs reveal">
+      {s.news.images.map(img => <div class="img"><img src={img} alt="" loading="lazy"></div>)}
+    </div>
+  </div>
+</section>
+
+<!-- CTA / Contact -->
+<section class="cta-section" id="contact">
+  <div class="cta-banner">
+    <img src={s.cta.image} alt="" loading="lazy">
+    <div class="cta-overlay">
+      <div class="cta-box reveal">
+        <h2>{s.cta.title}</h2>
+        <p>{s.cta.body}</p>
+        <form action="https://formspree.io/f/your-form-id" method="POST" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+          <input type="text" name="name" placeholder={s.cta.nameLabel} required style="padding: 12px; background: rgba(255,255,255,0.95); border: 0; font-size: 14px; color: #0a0a0a;">
+          <input type="email" name="email" placeholder={s.cta.emailLabel} required style="padding: 12px; background: rgba(255,255,255,0.95); border: 0; font-size: 14px; color: #0a0a0a;">
+          <input type="text" name="company" placeholder={s.cta.companyLabel} style="padding: 12px; background: rgba(255,255,255,0.95); border: 0; font-size: 14px; color: #0a0a0a;">
+          <textarea name="message" placeholder={s.cta.messageLabel} rows="3" style="padding: 12px; background: rgba(255,255,255,0.95); border: 0; font-size: 14px; color: #0a0a0a; font-family: inherit; resize: vertical;"></textarea>
+          <button type="submit" style="padding: 14px 30px; background: #0a0a0a; color: #fff; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; border: 0; cursor: pointer; margin-top: 6px;">{s.cta.submitLabel}</button>
+          <div style="display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap;">
+            <a href={`https://wa.me/${s.contact.whatsapp}`} target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #25D366; color: #fff; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; text-decoration: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              WhatsApp
+            </a>
+            <a href="#wechat-modal" onclick="document.getElementById('wechat-modal').style.display='flex';return false;" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #07C160; color: #fff; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; text-decoration: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.902-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.626-6.546 1.484-1.59 3.622-2.532 5.833-2.532.282 0 .56.015.835.04C15.751 3.845 12.468 2.188 8.691 2.188zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm3.683 3.626c-3.218 0-5.843 2.473-5.843 5.517 0 3.044 2.625 5.517 5.843 5.517.72 0 1.41-.12 2.044-.34a.71.71 0 0 1 .588.079l1.58.918a.262.262 0 0 0 .135.044c.131 0 .238-.107.238-.242 0-.058-.024-.116-.04-.174l-.323-1.215a.485.485 0 0 1 .174-.545C22.07 17.588 23 16.062 23 14.134c0-3.044-2.625-5.517-5.843-5.517zm-1.93 4.107c.526 0 .953.434.953.969a.961.961 0 0 1-.953.969.961.961 0 0 1-.953-.969c0-.535.427-.969.953-.969zm3.908 0c.526 0 .953.434.953.969a.961.961 0 0 1-.953.969.961.961 0 0 1-.953-.969c0-.535.427-.969.953-.969z"/></svg>
+              WeChat
+            </a>
+          </div>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 12px;">{t.orEmail} <a href={`mailto:${s.contact.email}`} style="color: #fff; border-bottom: 1px solid #fff;">{s.contact.email}</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+---
+interface NavItem { about: string; products: string; craft: string; platform: string; contact: string; }
+
+interface Props {
+  locale: 'en' | 'zh';
+  brand: string;
+  nav: NavItem;
+}
+
+const { locale, brand, nav } = Astro.props;
+const otherLocale = locale === 'en' ? 'zh' : 'en';
+
+// 构建当前页路径（去掉 locale 前缀和尾部斜杠）
+const rawPath = Astro.url.pathname.replace(/\/+$/, '');
+const basePath = rawPath.replace(/^\/(en|zh)/, '');
+
+// 语言切换链接：保持当前页面路径，只换语言
+const enHref = `/en${basePath}/index.html`;
+const zhHref = `/zh${basePath}/index.html`;
+
+const homeHref = `/${locale}/index.html`;
+const blogHref = `/${locale}/blog/index.html`;
+const casesHref = `/${locale}/cases/index.html`;
+const anchor = (id: string) => `/${locale}/index.html#${id}`;
+---
+
+<nav class="nav" id="nav">
+  <div class="inner">
+    <a href={homeHref} class="brand">{brand}</a>
+    <ul class="menu">
+      <li><a href={anchor('manifesto')}>{nav.about}</a></li>
+      <li><a href={anchor('models')}>{nav.products}</a></li>
+      <li><a href={anchor('craft')}>{nav.craft}</a></li>
+      <li><a href={anchor('platform')}>{nav.platform}</a></li>
+      <li><a href={anchor('contact')}>{nav.contact}</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href={blogHref}>Journal</a>
+      <a href={casesHref}>Work</a>
+      <div class="lang-switch">
+        <a href={enHref} class:list={[{ active: locale === 'en' }]} style={locale === 'en' ? '' : 'opacity:.4'}>EN</a>
+        <span style="opacity:.3">/</span>
+        <a href={zhHref} class:list={[{ active: locale === 'zh' }]} style={locale === 'zh' ? '' : 'opacity:.4'}>中</a>
+      </div>
+    </div>
+    <button class="burger" aria-label="menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>

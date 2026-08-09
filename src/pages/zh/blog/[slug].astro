@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+const locale = 'zh';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).filter(e => e.data.locale === 'zh' && !e.data.draft);
+  return posts.map(post => ({
+    params: { slug: post.id.split('/').pop() },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const settings = (await getCollection('settings')).find(e => e.data.locale === locale)!;
+const s = settings.data;
+const backLabel = '← 返回手记';
+---
+
+<Layout locale={locale} title={`${post.data.title} — ${s.brand}`} description={post.data.excerpt} ogImage={post.data.cover}>
+  <Nav locale={locale} brand={s.brand} nav={s.nav} />
+  <article class="article">
+    <div class="wrap">
+      <a href={`/${locale}/blog/index.html`} class="back-link">{backLabel}</a>
+      <div class="article-head">
+        <div class="meta">{post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+        <h1 class="section-title">{post.data.title}</h1>
+        <p class="body-text" style="margin: 0 auto;">{post.data.excerpt}</p>
+      </div>
+      <div class="article-cover"><img src={post.data.cover} alt={post.data.title} loading="lazy"></div>
+      <div class="article-body">
+        <Content />
+      </div>
+    </div>
+  </article>
+  <Footer locale={locale} brand={s.brand} brandDesc={s.footer.brandDesc} rights={s.footer.rights} location={s.footer.location} whatsapp={s.contact.whatsapp} email={s.contact.email} wechatId={s.contact.wechatId} wechatQr={s.contact.wechatQr} />
+</Layout>

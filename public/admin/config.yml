@@ -1,0 +1,313 @@
+backend:
+  name: github
+  repo: SENZA-X/senza-x-website
+  branch: main
+  auth_type: pkce
+  app_id: REPLACE_WITH_GITHUB_OAUTH_APP_ID
+media_folder: "public/img"
+public_folder: "/img"
+site_url: https://senza.x
+display_url: https://senza.x
+
+collections:
+  # ============ 首页设置 - 英文 ============
+  - name: "settings_en"
+    label: "🏠 首页设置 (English)"
+    delete: false
+    files:
+      - file: "src/content/settings/en.md"
+        name: "en"
+        label: "English Homepage"
+        fields:
+          - { label: "Locale", name: "locale", widget: "hidden", default: "en" }
+          - { label: "Brand", name: "brand", widget: "string" }
+          - label: "Navigation"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "About", name: "about", widget: "string" }
+              - { label: "Products", name: "products", widget: "string" }
+              - { label: "Craft", name: "craft", widget: "string" }
+              - { label: "Platform", name: "platform", widget: "string" }
+              - { label: "Contact", name: "contact", widget: "string" }
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Logo Text", name: "logoText", widget: "string" }
+              - { label: "Main Image", name: "mainImage", widget: "image" }
+          - label: "Manifesto"
+            name: "manifesto"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "text" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "CTA Label", name: "ctaLabel", widget: "string" }
+          - label: "Models"
+            name: "models"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Tabs"
+                name: "tabs"
+                widget: "list"
+                min: 1
+                field: { label: "Tab", name: "", widget: "string" }
+              - { label: "Main Image", name: "mainImage", widget: "image" }
+              - label: "Specs"
+                name: "specs"
+                widget: "list"
+                fields:
+                  - { label: "Number", name: "num", widget: "string" }
+                  - { label: "Label", name: "lbl", widget: "string" }
+          - label: "Mission"
+            name: "mission"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "text" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "Link Label", name: "linkLabel", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
+          - label: "Dark Section"
+            name: "dark"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "text" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "CTA Label", name: "ctaLabel", widget: "string" }
+              - { label: "Background Image", name: "bgImage", widget: "image" }
+          - label: "Cards"
+            name: "cards"
+            widget: "list"
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "Link Label", name: "linkLabel", widget: "string" }
+          - label: "News"
+            name: "news"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title", name: "title", widget: "text" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "CTA Label", name: "ctaLabel", widget: "string" }
+              - label: "Images"
+                name: "images"
+                widget: "list"
+                field: { label: "Image", name: "", widget: "image" }
+          - label: "CTA / Contact"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "text" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Name Label", name: "nameLabel", widget: "string" }
+              - { label: "Email Label", name: "emailLabel", widget: "string" }
+              - { label: "Company Label", name: "companyLabel", widget: "string" }
+              - { label: "Message Label", name: "messageLabel", widget: "string" }
+              - { label: "Submit Label", name: "submitLabel", widget: "string" }
+          - label: "Contact Info"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "WhatsApp (country code + number, no +)", name: "whatsapp", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "WeChat ID", name: "wechatId", widget: "string" }
+              - { label: "WeChat QR Image", name: "wechatQr", widget: "image" }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Brand Description", name: "brandDesc", widget: "text" }
+              - { label: "Rights", name: "rights", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+
+  # ============ 首页设置 - 中文 ============
+  - name: "settings_zh"
+    label: "🏠 首页设置 (中文)"
+    delete: false
+    files:
+      - file: "src/content/settings/zh.md"
+        name: "zh"
+        label: "中文首页"
+        fields:
+          - { label: "Locale", name: "locale", widget: "hidden", default: "zh" }
+          - { label: "品牌名", name: "brand", widget: "string" }
+          - label: "导航"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "关于", name: "about", widget: "string" }
+              - { label: "产品", name: "products", widget: "string" }
+              - { label: "工艺", name: "craft", widget: "string" }
+              - { label: "平台", name: "platform", widget: "string" }
+              - { label: "联系", name: "contact", widget: "string" }
+          - label: "首屏"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "品牌大字", name: "logoText", widget: "string" }
+              - { label: "主图", name: "mainImage", widget: "image" }
+          - label: "宣言板块"
+            name: "manifesto"
+            widget: "object"
+            fields:
+              - { label: "小标题", name: "eyebrow", widget: "string" }
+              - { label: "标题", name: "title", widget: "text" }
+              - { label: "正文", name: "body", widget: "text" }
+              - { label: "按钮文字", name: "ctaLabel", widget: "string" }
+          - label: "产品展示"
+            name: "models"
+            widget: "object"
+            fields:
+              - { label: "小标题", name: "eyebrow", widget: "string" }
+              - { label: "标题", name: "title", widget: "string" }
+              - label: "型号标签"
+                name: "tabs"
+                widget: "list"
+                min: 1
+                field: { label: "标签", name: "", widget: "string" }
+              - { label: "主图", name: "mainImage", widget: "image" }
+              - label: "参数"
+                name: "specs"
+                widget: "list"
+                fields:
+                  - { label: "数值", name: "num", widget: "string" }
+                  - { label: "标签", name: "lbl", widget: "string" }
+          - label: "使命板块"
+            name: "mission"
+            widget: "object"
+            fields:
+              - { label: "小标题", name: "eyebrow", widget: "string" }
+              - { label: "标题", name: "title", widget: "text" }
+              - { label: "正文", name: "body", widget: "text" }
+              - { label: "链接文字", name: "linkLabel", widget: "string" }
+              - { label: "图片", name: "image", widget: "image" }
+          - label: "深色板块"
+            name: "dark"
+            widget: "object"
+            fields:
+              - { label: "小标题", name: "eyebrow", widget: "string" }
+              - { label: "标题", name: "title", widget: "text" }
+              - { label: "正文", name: "body", widget: "text" }
+              - { label: "按钮文字", name: "ctaLabel", widget: "string" }
+              - { label: "背景图", name: "bgImage", widget: "image" }
+          - label: "卡片"
+            name: "cards"
+            widget: "list"
+            fields:
+              - { label: "图片", name: "image", widget: "image" }
+              - { label: "标题", name: "title", widget: "string" }
+              - { label: "正文", name: "body", widget: "text" }
+              - { label: "链接文字", name: "linkLabel", widget: "string" }
+          - label: "新闻板块"
+            name: "news"
+            widget: "object"
+            fields:
+              - { label: "小标题", name: "eyebrow", widget: "string" }
+              - { label: "标题", name: "title", widget: "text" }
+              - { label: "正文", name: "body", widget: "text" }
+              - { label: "按钮文字", name: "ctaLabel", widget: "string" }
+              - label: "图片"
+                name: "images"
+                widget: "list"
+                field: { label: "图片", name: "", widget: "image" }
+          - label: "询盘/联系板块"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "标题", name: "title", widget: "text" }
+              - { label: "正文", name: "body", widget: "text" }
+              - { label: "图片", name: "image", widget: "image" }
+              - { label: "姓名输入框", name: "nameLabel", widget: "string" }
+              - { label: "邮箱输入框", name: "emailLabel", widget: "string" }
+              - { label: "公司输入框", name: "companyLabel", widget: "string" }
+              - { label: "留言输入框", name: "messageLabel", widget: "string" }
+              - { label: "提交按钮", name: "submitLabel", widget: "string" }
+          - label: "联系方式"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "WhatsApp（国家码+号码，不加+）", name: "whatsapp", widget: "string" }
+              - { label: "邮箱", name: "email", widget: "string" }
+              - { label: "微信号", name: "wechatId", widget: "string" }
+              - { label: "微信二维码图", name: "wechatQr", widget: "image" }
+          - label: "页脚"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "品牌简介", name: "brandDesc", widget: "text" }
+              - { label: "版权", name: "rights", widget: "string" }
+              - { label: "地点", name: "location", widget: "string" }
+
+  # ============ 博客 - 英文 ============
+  - name: "blog_en"
+    label: "📝 博客 (English)"
+    folder: "src/content/blog/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Locale", name: "locale", widget: "hidden", default: "en" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Cover Image", name: "cover", widget: "image" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # ============ 博客 - 中文 ============
+  - name: "blog_zh"
+    label: "📝 博客 (中文)"
+    folder: "src/content/blog/zh"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Locale", name: "locale", widget: "hidden", default: "zh" }
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "摘要", name: "excerpt", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime" }
+      - { label: "封面图", name: "cover", widget: "image" }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  # ============ 案例库 - 英文 ============
+  - name: "cases_en"
+    label: "🖼 案例库 (English)"
+    folder: "src/content/cases/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Locale", name: "locale", widget: "hidden", default: "en" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Cover Image", name: "cover", widget: "image" }
+      - { label: "Client", name: "client", widget: "string", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Materials", name: "materials", widget: "string", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # ============ 案例库 - 中文 ============
+  - name: "cases_zh"
+    label: "🖼 案例库 (中文)"
+    folder: "src/content/cases/zh"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Locale", name: "locale", widget: "hidden", default: "zh" }
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "摘要", name: "excerpt", widget: "string" }
+      - { label: "日期", name: "date", widget: "datetime" }
+      - { label: "封面图", name: "cover", widget: "image" }
+      - { label: "客户", name: "client", widget: "string", required: false }
+      - { label: "地点", name: "location", widget: "string", required: false }
+      - { label: "材质", name: "materials", widget: "string", required: false }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - { label: "正文", name: "body", widget: "markdown" }

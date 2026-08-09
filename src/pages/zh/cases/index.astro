@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+const locale = 'zh';
+const settings = (await getCollection('settings')).find(e => e.data.locale === locale)!;
+const s = settings.data;
+
+const items = (await getCollection('cases'))
+  .filter(e => e.data.locale === locale && !e.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const t = { title: '精选作品', eyebrow: '案例研究', intro: '看看我们做过的作品——材质、约束与结果。' };
+---
+
+<Layout locale={locale} title={`${s.brand} — 作品`} description={t.intro}>
+  <Nav locale={locale} brand={s.brand} nav={s.nav} />
+  <section class="list-page">
+    <div class="wrap">
+      <div class="eyebrow">{t.eyebrow}</div>
+      <h1 class="section-title">{t.title}</h1>
+      <p class="body-text">{t.intro}</p>
+      <div class="list-grid">
+        {items.map(item => (
+          <a class="list-card" href={`/${locale}/cases/${item.id.split('/').pop()}/index.html`}>
+            <div class="lc-img"><img src={item.data.cover} alt={item.data.title} loading="lazy"></div>
+            <div class="lc-date">{item.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' })}</div>
+            <h3>{item.data.title}</h3>
+            <p class="lc-excerpt">{item.data.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <Footer locale={locale} brand={s.brand} brandDesc={s.footer.brandDesc} rights={s.footer.rights} location={s.footer.location} whatsapp={s.contact.whatsapp} email={s.contact.email} wechatId={s.contact.wechatId} wechatQr={s.contact.wechatQr} />
+</Layout>

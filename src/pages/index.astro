@@ -1,0 +1,18 @@
+---
+// 根路径：JS 客户端语言检测，重定向到 en 或 zh
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SENZA.X</title>
+<script>
+  var lang = (navigator.language || 'en').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+  window.location.replace('/' + lang + '/index.html');
+</script>
+<meta http-equiv="refresh" content="0;url=/en/index.html">
+</head>
+<body style="margin:0;padding:40px;text-align:center;font-family:sans-serif;background:#0a0a0a;color:#fff;">
+<p>Redirecting to <a href="/en/index.html" style="color:#fff;">SENZA.X</a>...</p>
+</body>
+</html>
