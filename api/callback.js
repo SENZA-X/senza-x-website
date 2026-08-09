@@ -51,20 +51,25 @@ export default async function handler(req, res) {
       `authorization:github:success:${content}`
     );
 
-    // Send token to Decap CMS via two-way postMessage handshake
+    // Send token to Decap CMS immediately (no handshake needed)
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(`<!DOCTYPE html>
 <html>
+<head><meta charset="utf-8"></head>
 <body>
 <p>Completing login...</p>
 <script>
   (function() {
-    function receiveMessage(e) {
-      window.opener.postMessage(${message}, e.origin);
-    }
-    window.addEventListener('message', receiveMessage, false);
-    // Start handshake with parent window
+    // Send token immediately to opener window
+    window.opener.postMessage(${message}, '*');
+    // Also try the handshake method as fallback
     window.opener.postMessage('authorizing:github', '*');
+    // Retry sending after a short delay
+    setTimeout(function() {
+      window.opener.postMessage(${message}, '*');
+    }, 500);
+    // Close popup after 3 seconds
+    setTimeout(function() { window.close(); }, 3000);
   })();
 </script>
 </body>
@@ -78,15 +83,13 @@ export default async function handler(req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(`<!DOCTYPE html>
 <html>
+<head><meta charset="utf-8"></head>
 <body>
 <p>Login failed: ${error.message}</p>
 <script>
   (function() {
-    function receiveMessage(e) {
-      window.opener.postMessage(${message}, e.origin);
-    }
-    window.addEventListener('message', receiveMessage, false);
-    window.opener.postMessage('authorizing:github', '*');
+    window.opener.postMessage(${message}, '*');
+    setTimeout(function() { window.close(); }, 5000);
   })();
 </script>
 </body>
