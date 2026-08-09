@@ -3,11 +3,11 @@ backend:
   repo: SENZA-X/senza-x-website
   branch: main
   auth_type: pkce
-  app_id: REPLACE_WITH_GITHUB_OAUTH_APP_ID
+  app_id: Ov23liM0WyuLDI1rklEJ
 media_folder: "public/img"
 public_folder: "/img"
-site_url: https://senza.x
-display_url: https://senza.x
+site_url: https://senza-x-website.vercel.app
+display_url: https://senza-x-website.vercel.app
 
 collections:
   # ============ 首页设置 - 英文 ============
