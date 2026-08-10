@@ -8,7 +8,7 @@ nav:
   platform: 平台
   contact: 联系
 hero:
-  logoText: S E N Z A.X
+  logoText: 界么
   mainImage: /img/hero-showroom.jpg
 manifesto:
   eyebrow: 定制家具工坊
