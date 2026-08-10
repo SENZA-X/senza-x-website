@@ -50,18 +50,19 @@ collections:
             fields:
               - { label: "Eyebrow", name: "eyebrow", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
-              - label: "Tabs"
-                name: "tabs"
+              - label: "Product Items"
+                name: "items"
                 widget: "list"
                 min: 1
-                field: { label: "Tab", name: "", widget: "string" }
-              - { label: "Main Image", name: "mainImage", widget: "image" }
-              - label: "Specs"
-                name: "specs"
-                widget: "list"
                 fields:
-                  - { label: "Number", name: "num", widget: "string" }
-                  - { label: "Label", name: "lbl", widget: "string" }
+                  - { label: "Name (e.g. BETON)", name: "name", widget: "string" }
+                  - { label: "Image", name: "image", widget: "image" }
+                  - label: "Specs"
+                    name: "specs"
+                    widget: "list"
+                    fields:
+                      - { label: "Number", name: "num", widget: "string" }
+                      - { label: "Label", name: "lbl", widget: "string" }
           - label: "Mission"
             name: "mission"
             widget: "object"
@@ -168,18 +169,19 @@ collections:
             fields:
               - { label: "小标题", name: "eyebrow", widget: "string" }
               - { label: "标题", name: "title", widget: "string" }
-              - label: "型号标签"
-                name: "tabs"
+              - label: "产品列表"
+                name: "items"
                 widget: "list"
                 min: 1
-                field: { label: "标签", name: "", widget: "string" }
-              - { label: "主图", name: "mainImage", widget: "image" }
-              - label: "参数"
-                name: "specs"
-                widget: "list"
                 fields:
-                  - { label: "数值", name: "num", widget: "string" }
-                  - { label: "标签", name: "lbl", widget: "string" }
+                  - { label: "名称（如 BÉTON）", name: "name", widget: "string" }
+                  - { label: "图片", name: "image", widget: "image" }
+                  - label: "参数"
+                    name: "specs"
+                    widget: "list"
+                    fields:
+                      - { label: "数值", name: "num", widget: "string" }
+                      - { label: "标签", name: "lbl", widget: "string" }
           - label: "使命板块"
             name: "mission"
             widget: "object"

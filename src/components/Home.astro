@@ -65,7 +65,7 @@ const t = {
   </div>
 </section>
 
-<!-- Models -->
+<!-- Models (Carousel) -->
 <section class="models" id="models">
   <div class="wrap">
     <div class="models-head reveal">
@@ -73,25 +73,74 @@ const t = {
         <div class="eyebrow">{s.models.eyebrow}</div>
         <h2 class="section-title">{s.models.title}</h2>
       </div>
-      <div class="model-nav">
-        {s.models.tabs.map((tab, i) => <span class:list={[{ active: i === 0 }]}>{tab}</span>)}
-      </div>
-    </div>
-    <div class="model-stage reveal">
-      <div class="model-main-img">
-        <img src={s.models.mainImage} alt={s.models.title} loading="lazy">
-      </div>
-      <div class="model-specs">
-        {s.models.specs.map(spec => (
-          <div class="model-spec">
-            <div class="num">{spec.num}</div>
-            <div class="lbl">{spec.lbl}</div>
-          </div>
+      <div class="model-nav" id="modelNav">
+        {s.models.items.map((item, i) => (
+          <span class:list={[{ active: i === 0 }]} data-idx={i}>{item.name}</span>
         ))}
       </div>
     </div>
+    <div class="model-stage reveal" id="modelStage">
+      {s.models.items.map((item, i) => (
+        <div class:list={["model-slide", { active: i === 0 }]} data-idx={i}>
+          <div class="model-main-img">
+            <img src={item.image} alt={item.name} loading="lazy">
+          </div>
+          <div class="model-specs">
+            {item.specs.map(spec => (
+              <div class="model-spec">
+                <div class="num">{spec.num}</div>
+                <div class="lbl">{spec.lbl}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
+
+<script>
+  (function() {
+    const stage = document.getElementById('modelStage');
+    const nav = document.getElementById('modelNav');
+    if (!stage || !nav) return;
+    const slides = stage.querySelectorAll('.model-slide');
+    const tabs = nav.querySelectorAll('span');
+    let current = 0;
+    let timer;
+
+    function goTo(idx) {
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+      current = idx;
+    }
+
+    function next() {
+      goTo((current + 1) % slides.length);
+    }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(next, 5000);
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        goTo(i);
+        startAuto();
+      });
+    });
+
+    // Pause on hover
+    const section = document.querySelector('.models');
+    if (section) {
+      section.addEventListener('mouseenter', () => clearInterval(timer));
+      section.addEventListener('mouseleave', startAuto);
+    }
+
+    startAuto();
+  })();
+</script>
 
 <!-- Mission -->
 <section class="mission">

@@ -27,9 +27,11 @@ const settings = defineCollection({
     models: z.object({
       eyebrow: z.string(),
       title: z.string(),
-      tabs: z.array(z.string()),
-      mainImage: z.string(),
-      specs: z.array(z.object({ num: z.string(), lbl: z.string() })),
+      items: z.array(z.object({
+        name: z.string(),
+        image: z.string(),
+        specs: z.array(z.object({ num: z.string(), lbl: z.string() })),
+      })),
     }),
     mission: z.object({
       eyebrow: z.string(),

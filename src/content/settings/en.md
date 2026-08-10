@@ -18,19 +18,43 @@ manifesto:
 models:
   eyebrow: Selected Works
   title: Furniture Model
-  tabs:
-    - BÉTON
-    - OAK 03
-    - ACIER
-    - MONO
-  mainImage: /img/concrete-table.jpg
-  specs:
-    - num: "6m"
-      lbl: Max length
-    - num: "3+"
-      lbl: Composite materials
-    - num: "11"
-      lbl: Lead time (weeks)
+  items:
+    - name: BÉTON
+      image: /img/concrete-table.jpg
+      specs:
+        - num: "6m"
+          lbl: Max length
+        - num: "3+"
+          lbl: Composite materials
+        - num: "11"
+          lbl: Lead time (weeks)
+    - name: OAK 03
+      image: /img/wood-work.jpg
+      specs:
+        - num: "4m"
+          lbl: Max length
+        - num: "2"
+          lbl: Wood species
+        - num: "8"
+          lbl: Lead time (weeks)
+    - name: ACIER
+      image: /img/handtools.jpg
+      specs:
+        - num: "5m"
+          lbl: Max length
+        - num: "4+"
+          lbl: Metal alloys
+        - num: "12"
+          lbl: Lead time (weeks)
+    - name: MONO
+      image: /img/chair-product.jpg
+      specs:
+        - num: "3m"
+          lbl: Max length
+        - num: "1"
+          lbl: Pure material
+        - num: "6"
+          lbl: Lead time (weeks)
 mission:
   eyebrow: Our Mission
   title: "We're on a mission to change furniture craftsmanship forever."
