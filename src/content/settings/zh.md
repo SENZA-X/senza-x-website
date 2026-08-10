@@ -1,6 +1,6 @@
 ---
 locale: zh
-brand: 界么
+brand: S E N Z A.X
 nav:
   about: 关于
   products: 产品
