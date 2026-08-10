@@ -2,8 +2,8 @@ backend:
   name: github
   repo: SENZA-X/senza-x-website
   branch: main
-  base_url: https://senza-x-website.vercel.app/api
-  auth_endpoint: auth
+  base_url: https://senza-x-website.vercel.app
+  auth_endpoint: api/auth
 media_folder: "public/img"
 public_folder: "/img"
 site_url: https://senza-x-website.vercel.app

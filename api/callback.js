@@ -1,5 +1,5 @@
 // Vercel serverless function: handles GitHub OAuth callback
-// Implements Decap CMS two-way handshake protocol
+// Implements Decap CMS NetlifyAuthenticator two-way handshake protocol
 export default async function handler(req, res) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -46,7 +46,11 @@ export default async function handler(req, res) {
       provider: 'github',
     });
 
-    // Two-way handshake protocol (required by Decap CMS)
+    // Decap CMS NetlifyAuthenticator two-way handshake:
+    // 1. Popup sends "authorizing:github" to parent
+    // 2. Parent echoes back "authorizing:github" (only if e.origin === base_url)
+    // 3. Popup sends "authorization:github:success:{json}" to parent
+    // 4. Parent receives token, closes popup
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(`<!DOCTYPE html>
 <html>
@@ -56,26 +60,26 @@ export default async function handler(req, res) {
 <script>
   (function() {
     function receiveMessage(e) {
-      // Send token to opener using the origin from the handshake acknowledgment
+      // Parent acknowledged our "authorizing:github" message
+      // e.origin is the parent's origin (same as ours)
       window.opener.postMessage(
         'authorization:github:success:${content}',
         e.origin
       );
-      // Clean up
       window.removeEventListener('message', receiveMessage, false);
-      setTimeout(function() { window.close(); }, 1000);
+      setTimeout(function() { window.close(); }, 500);
     }
     window.addEventListener('message', receiveMessage, false);
-    // Initiate handshake with parent window (Decap CMS)
+    // Step 1: initiate handshake with parent
     window.opener.postMessage('authorizing:github', '*');
-    // Timeout fallback: if no acknowledgment in 5s, try sending directly
+    // Fallback: if no ack in 8s, try sending token directly
     setTimeout(function() {
       window.opener.postMessage(
         'authorization:github:success:${content}',
         '*'
       );
       setTimeout(function() { window.close(); }, 2000);
-    }, 5000);
+    }, 8000);
   })();
 </script>
 </body>
