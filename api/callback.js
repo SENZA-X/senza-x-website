@@ -1,5 +1,5 @@
 // Vercel serverless function: handles GitHub OAuth callback
-// Exchanges code for token, sends to Decap CMS via postMessage
+// Implements Decap CMS two-way handshake protocol
 export default async function handler(req, res) {
   const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -11,9 +11,7 @@ export default async function handler(req, res) {
 
   if (!code) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(
-      `<script>window.opener.postMessage({error:'Missing code'},'*');window.close();</script>`
-    );
+    res.end(`<script>window.opener.postMessage({error:'Missing code'},'*');window.close();</script>`);
     return;
   }
 
@@ -47,11 +45,8 @@ export default async function handler(req, res) {
       token: accessToken,
       provider: 'github',
     });
-    const message = JSON.stringify(
-      `authorization:github:success:${content}`
-    );
 
-    // Send token to Decap CMS immediately (no handshake needed)
+    // Two-way handshake protocol (required by Decap CMS)
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(`<!DOCTYPE html>
 <html>
@@ -60,25 +55,33 @@ export default async function handler(req, res) {
 <p>Completing login...</p>
 <script>
   (function() {
-    // Send token immediately to opener window
-    window.opener.postMessage(${message}, '*');
-    // Also try the handshake method as fallback
+    function receiveMessage(e) {
+      // Send token to opener using the origin from the handshake acknowledgment
+      window.opener.postMessage(
+        'authorization:github:success:${content}',
+        e.origin
+      );
+      // Clean up
+      window.removeEventListener('message', receiveMessage, false);
+      setTimeout(function() { window.close(); }, 1000);
+    }
+    window.addEventListener('message', receiveMessage, false);
+    // Initiate handshake with parent window (Decap CMS)
     window.opener.postMessage('authorizing:github', '*');
-    // Retry sending after a short delay
+    // Timeout fallback: if no acknowledgment in 5s, try sending directly
     setTimeout(function() {
-      window.opener.postMessage(${message}, '*');
-    }, 500);
-    // Close popup after 3 seconds
-    setTimeout(function() { window.close(); }, 3000);
+      window.opener.postMessage(
+        'authorization:github:success:${content}',
+        '*'
+      );
+      setTimeout(function() { window.close(); }, 2000);
+    }, 5000);
   })();
 </script>
 </body>
 </html>`);
   } catch (error) {
-    const content = JSON.stringify({ error: error.message });
-    const message = JSON.stringify(
-      `authorization:github:error:${content}`
-    );
+    const errorContent = JSON.stringify({ error: error.message });
 
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(`<!DOCTYPE html>
@@ -88,8 +91,16 @@ export default async function handler(req, res) {
 <p>Login failed: ${error.message}</p>
 <script>
   (function() {
-    window.opener.postMessage(${message}, '*');
-    setTimeout(function() { window.close(); }, 5000);
+    function receiveMessage(e) {
+      window.opener.postMessage(
+        'authorization:github:error:${errorContent}',
+        e.origin
+      );
+      window.removeEventListener('message', receiveMessage, false);
+    }
+    window.addEventListener('message', receiveMessage, false);
+    window.opener.postMessage('authorizing:github', '*');
+    setTimeout(function() { window.close(); }, 8000);
   })();
 </script>
 </body>
